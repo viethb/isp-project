@@ -57,10 +57,10 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
-    public function updateTask (string $key, Request $request)
+    public function editTask (string $key, Request $request)
     {
         try {
-            $board = Board::where('key', $key)->firstOrFail();
+            Board::where('key', $key)->firstOrFail();
         }
         catch(\Exception $e) {
             error_log('---> Exeption for key '.$key.' : '.$e);
@@ -82,12 +82,8 @@ class TaskController extends Controller
         if($task) {
             $task->title = $title;
             $task->description = $description;
+            $task->assignee = $assignee;
 
-            if($assignee == "null") {
-                $task->assignee = null;
-            } else {
-                $task->assignee = $assignee;
-            }
             if($type == "null") {
                 $task->type = null;
             } else {
@@ -95,6 +91,40 @@ class TaskController extends Controller
             }
             $task->due_date = $dueDate;
             $task->priority = $priority;
+            $task->status = $status;
+
+            $task->save();
+
+            if($commentText){
+                $newComment = Comment::create([
+                    'text' => $commentText,
+                    'task_id' => $id
+                ]);
+                $newComment->save();
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    public function updateTask(string $key, Request $request) {
+        try {
+            Board::where('key', $key)->firstOrFail();
+        }
+        catch(\Exception $e) {
+            error_log('---> Exeption: Key not found! Key: '.$key.' : '.$e);
+            return redirect()->back();
+        }
+
+        $id = $request->input('id');
+        $status = $request->input('status');
+        $assignee = $request->input('assignee');
+        $commentText =$request->input('comment');
+
+        $task = Task::find($id);
+
+        if($task) {
+            $task->assignee = $assignee;
             $task->status = $status;
 
             $task->save();

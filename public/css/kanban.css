@@ -38,6 +38,29 @@ button:active {
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
 }
 
+input {
+    border-radius: 6px;
+    height: 25px;
+    width: 180px;
+    border: 1px solid var(--grey-dark);
+}
+
+.button-large {
+    width: 186px;
+    height: 60px;
+    margin: 20px 0 0 92px;
+}
+
+form>.button-large {
+    display: block;
+    margin: 20px auto 0 auto;
+}
+
+.button-secondary {
+    background-color: var(--grey-light);
+    color: var(--font-color);
+}
+
 .start-page {
     height: 100%;
     text-align: center;
@@ -70,8 +93,6 @@ button:active {
     display: flex;
 }
 
-
-
 .overlay-container {
     display: none;
     position: fixed;
@@ -90,6 +111,12 @@ button:active {
     height: 60%;
     width: 60%;
     margin: 10% auto;
+    display: flex;
+}
+
+.overlay>form {
+    width: 100%;
+    justify-content: center;
     display: flex;
 }
 
@@ -172,6 +199,7 @@ button:active {
     border: 1px solid var(--overlay-color);
     border-radius: 6px;
     background: var(--background-color);
+    margin: 0;
 }
 
 .overlay-container-segment>div:first-of-type {
@@ -263,6 +291,19 @@ button:active {
     font-size: 8px;
 }
 
+.form-field-container {
+    display: flex;
+    width: 280px;
+    margin: 10px auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-field-container>label {
+    text-align: left;
+    width: 62px;
+}
+
 #update-task-first-segment {
     margin-top: 10px
 }
@@ -287,6 +328,11 @@ button:active {
     display: inline;
 }
 
-#updateTaskForm {
+#editTaskForm {
     display: contents;
+}
+
+#login-container {
+    height: 100%;
+    padding-top: 17%;
 }

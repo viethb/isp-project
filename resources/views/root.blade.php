@@ -17,45 +17,35 @@
             @if (Route::has('login'))
 
                 <div class="user-links-container">
-                    <div></div>
+                    <div></div> <!-- leeres Div aus Styling-Gründen notwendig -->
                     <div>
                     @auth
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <button type="submit">
                                 Logout   |
                             </button>
                         </form>
                         <a href="{{ url('/welcome') }}">   Meine Boards</a>
-                    @else
+                        @else
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="ml-4 text-sm">Registrieren   </a>
                         @endif
                         <a href="{{ route('login') }}" class="text-sm">|   Login</a>
-
-
                     @endauth
                     </div>
                 </div>
             @endif
             <h1>Easy Kanban</h1>
-
                 <form method="GET" action="{{route('showBoard')}}">
                     @csrf
+                    <input type="text" name="board-key" placeholder="Board-Code eingeben" required>
 
-
-                    <input type="text" name="board-key" value="Board-Code eingeben" required>
-                    <br>
-
-
-                    <button type="submit">
+                    <button type="submit" class="button-large">
                         Board besuchen
                     </button>
                 </form>
-
-
         </div>
     </body>
 </html>

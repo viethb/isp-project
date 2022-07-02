@@ -20,9 +20,6 @@ class BoardController extends Component
         $description = $request->input('description');
         $key = $this->generateKey();
 
-        error_log('---> key: '.$key);
-        error_log('---> creator_id: '.Auth::id());
-
         $board = Board::create([
             'title' => $title,
             'description' => $description,
@@ -59,6 +56,19 @@ class BoardController extends Component
     private function checkIfKeyExists(string $key){
         $board = Board::where('key', $key)->first();
         return $board !== null;
+    }
+
+    public function updateBoard(Request $request, string $key) {
+        $board = Board::where('key', $key)->findOrFail();
+
+        $title = $request->input('title');
+        $description = $request->input('description');
+
+        $board->title = $title;
+        $board->description = $description;
+
+        $board->save();
+        return redirect()->back();
     }
 
     public function show(Request $request, string $key = null) {

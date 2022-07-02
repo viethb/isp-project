@@ -29,8 +29,10 @@ Route::middleware([
         return view('livewire.welcome');
     })->name('livewire-welcome');
     Route::post('/board/add', [\App\Http\Livewire\BoardController::class, "addBoard"])->name("addBoard");
+    Route::post('/board/{key}/update', [\App\Http\Livewire\BoardController::class, "updateBoard"])->name("updateBoard");
     Route::post('/board/{key}/task/add', [\App\Http\Controllers\TaskController::class, "addTask"])->name("addTask");
-    Route::post('/board/{key}/task/update', [\App\Http\Controllers\TaskController::class, "updateTask"])->name("updateTask");
+    Route::post('/board/{key}/task/edit', [\App\Http\Controllers\TaskController::class, "editTask"])->name("editTask");
 });
 
 Route::get('/board/{key?}', [\App\Http\Livewire\BoardController::class, "show"])->name("showBoard");
+Route::post('/board/{key}/task/update', [\App\Http\Controllers\TaskController::class, "updateTask"])->name("updateTask");

@@ -6,13 +6,21 @@
 
     <div class="board-main-content">
         <div class="board-page-area" id="board-area-left">
-            <button onclick="showOverlayContainer('addTaskForm')">Neues Ticket</button>
+            @auth
+                <a href="{{ url('/welcome') }}" class="link-secondary">Zurück zu meinen Boards</a>
+                <button onclick="showOverlayContainer('addTaskForm')">Neues Ticket</button>
+            @endauth
+            @guest
+                <a href="{{ url('/') }}" class="link-secondary">Zu einem anderen Board</a>
+            @endguest
             <div>
                 Board-Key {{ $board->key }}
             </div>
-            <a onclick="showOverlayContainer('updateBoardForm')">
-               Board bearbeiten
-            </a>
+            @auth
+                <a onclick="showOverlayContainer('updateBoardForm')">
+                   Board bearbeiten
+                </a>
+            @endauth
         </div>
         <div class="board-page-area" id="board-area-middle">
             {{ $board->title }}
@@ -21,10 +29,6 @@
                     {{-- Column 'Offen' --}}
                     <div class="bg-slate-50 border-b-2 border-slate-300">Offen</div>
                     @foreach($board->tasks()->where('status', 0)->get() as $task)
-
-
-{{--                            @include('pm.taskDialog', ['task' => $task])--}}
-                    {{ $task->title }}
                         @include('task', ['task' => $task, 'key' => $board->key])
                     @endforeach
                 </div>
@@ -33,10 +37,6 @@
                 <div class="task-column">
                     <div class="bg-slate-50 border-b-2 border-slate-300">In Arbeit</div>
                     @foreach($board->tasks()->where('status', 1)->get() as $task)
-
-{{--                            @include('pm.taskDialog', ['task' => $task])--}}
-
-                            {{ $task->title }}
                         @include('task', ['task' => $task, 'key' => $board->key])
                     @endforeach
                 </div>
@@ -45,10 +45,6 @@
                 <div class="task-column">
                     <div class="bg-slate-50 border-b-2 border-slate-300">Abgeschlossen</div>
                     @foreach($board->tasks()->where('status', 2)->get() as $task)
-
-{{--                            @include('pm.taskDialog', ['task' => $task])--}}
-
-                            {{ $task->title }}
                         @include('task', ['task' => $task, 'key' => $board->key])
                     @endforeach
                 </div>
@@ -57,16 +53,17 @@
                 <div class="task-column">
                     <div class="bg-slate-50 border-b-2 border-slate-300">Vergangen</div>
                     @foreach($board->tasks()->where('status', 3)->get() as $task)
-
-{{--                            @include('pm.taskDialog', ['task' => $task])--}}
-
-                            {{ $task->title }}
                         @include('task', ['task' => $task, 'key' => $board->key])
                     @endforeach
                 </div>
             </div>
         </div>
         <div class="board-page-area" id="board-area-right">
+            @guest
+                Ersteller
+                {{ $board->creator->name }}
+            @endguest
+
             Board Beschreibung
             {{ $board->description }}
         </div>
@@ -81,10 +78,10 @@
                     <p>Neuen Task erstellen</p>
                     <label for="title">Titel</label>
                     <input type="text" name="title" required>
-                    <br>
+
                     <label for="description">Beschreibung</label>
                     <textarea name="description" rows="5" maxlength="2500"></textarea>
-                    <br>
+
                     <div class="overlay-container-segment">
                         <div>
                             <label for="dueDate">Fälligkeitsdatum</label>
@@ -117,10 +114,10 @@
                         </div>
                     </div>
                     <div class="button-container">
-                        <button type="reset" onclick="hideOverlayContainer('addTaskForm')" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300">
+                        <button type="reset" onclick="hideOverlayContainer('addTaskForm')" class="button-secondary">
                             Abbrechen
                         </button>
-                        <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button type="submit">
                             Speichern
                         </button>
                     </div>
@@ -137,13 +134,15 @@
                     <p>Board bearbeiten</p>
                     <label for="title">Titel</label>
                     <input type="text" name="title" value="{{ $board->title }}" required>
-                    <br>
+
                     <label for="description">Beschreibung</label>
-                    <textarea name="description" rows="5" maxlength="2500" value="{{ $board->description }}"></textarea>
-                    <br>
+                    <textarea name="description" rows="5" maxlength="2500">
+                        {{ $board->description }}
+                    </textarea>
+
 
                     <div class="button-container">
-                        <button type="reset" onclick="hideOverlayContainer('updateBoardForm')" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300">
+                        <button type="reset" onclick="hideOverlayContainer('updateBoardForm')" class="button-secondary">
                             Abbrechen
                         </button>
                         <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

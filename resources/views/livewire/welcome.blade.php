@@ -10,21 +10,23 @@
     <div id="addBoardForm" class="overlay-container">
         <div class="overlay">
             <form method="POST" action="{{route('addBoard')}}">
-                @csrf
+                <div class="overlay-section">
+                    @csrf
 
-                <label for="title">Titel: </label>
-                <input type="text" name="title" required>
-                <br>
-                <label for="description">Beschreibung: </label>
-                <input type="text" name="description">
-                <br>
+                    <label for="title">Titel: </label>
+                    <input type="text" name="title" required>
 
-                <button type="reset" onclick="hideOverlayContainer('addBoardForm')">
-                    Abbrechen
-                </button>
-                <button type="submit">
-                    Speichern
-                </button>
+                    <label for="description">Beschreibung: </label>
+                    <input type="text" name="description">
+
+
+                    <button type="reset" onclick="hideOverlayContainer('addBoardForm')" class="button-secondary">
+                        Abbrechen
+                    </button>
+                    <button type="submit">
+                        Speichern
+                    </button>
+                </div>
             </form>
         </div>
     </div>

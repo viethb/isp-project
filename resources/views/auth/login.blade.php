@@ -3,7 +3,7 @@
         <x-slot name="logo">
 
         </x-slot>
-        <div id="login-container">
+        <div id="login-container" class="start-page">
             <x-jet-validation-errors class="mb-4" />
 
             @if (session('status'))

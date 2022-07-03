@@ -92,4 +92,16 @@ class BoardController extends Component
         return view("livewire.board", ['board' => $board]);
     }
 
+    public function deleteBoard(string $key) {
+        try {
+            $board = Board::where('key', $key)->firstOrFail();
+        }
+        catch(\Exception $e) {
+            error_log('---> Exeption: Key not found! Key: '.$key.' : '.$e);
+            return redirect()->back();
+        }
+
+        $board->delete();
+        return redirect()->route('livewire-welcome');
+    }
 }

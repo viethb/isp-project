@@ -1,12 +1,13 @@
+<x-guest-layout>
 <div class="welcome-container">
 <script src="{{ asset('js/kanban.js')}}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('css/kanban.css') }}" >
     @include('header-links')
 
     <h1>Hallo, {{Auth::user()->name}}!</h1>
-    <button onclick="showOverlayContainer('addBoardForm')">Neues Board</button>
+    <button class="button-small" onclick="showOverlayContainer('addBoardForm')">Neues Board</button>
 
-    {{-- Formular zum Hinzufügen eines neuen Boards, nur sichtbar, wenn der "Neues Board"-Button geklicked wird --}}
+    {{-- Formular zum Hinzufügen eines neuen Boards, nur sichtbar, wenn der "Neues Board"-Button geklicked wurde --}}
     <div id="addBoardForm" class="overlay-container">
         <div class="overlay">
             <form method="POST" action="{{route('addBoard')}}">
@@ -23,7 +24,7 @@
                     <button type="reset" onclick="hideOverlayContainer('addBoardForm')" class="button-secondary">
                         Abbrechen
                     </button>
-                    <button type="submit">
+                    <button type="submit" class="button-small">
                         Speichern
                     </button>
                 </div>
@@ -42,3 +43,4 @@
     </div>
 
 </div>
+</x-guest-layout>

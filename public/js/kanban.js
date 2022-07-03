@@ -1,6 +1,5 @@
 const columns = document.getElementsByClassName('task-column');
 
-
 Array.from(columns).forEach(c => {
     console.log(c);
 

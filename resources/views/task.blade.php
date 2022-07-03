@@ -1,5 +1,5 @@
 <div class="task-small {{ isset($task->due_date) && $task->isDueIn() < 7 ? 'is-due' : ''  }}"
-     onclick="showOverlayContainer({{ $task->id }})">
+     onclick="showOverlayContainer({{ $task->id }})" draggable="true" ondragstart="drag(event, {{ $task->id }})">
     <div class="task-small-id">
         #{{ $task->id }}
     </div>
@@ -141,7 +141,7 @@
                     <button type="reset" onclick="hideOverlayContainer({{ $task->id }})" class="button-secondary">
                         Abbrechen
                     </button>
-                    <button type="submit">
+                    <button type="submit" class="button-small">
                         Speichern
                     </button>
                 </div>

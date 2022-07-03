@@ -140,4 +140,16 @@ class TaskController extends Controller
 
         return redirect()->back();
     }
+
+    public function updateStatus (string $key, int $id, int $status) {
+        $board = Board::where('key', $key)->first();
+        $task = Task::find($id);
+
+        if ( $board && $task && $task->status !== $status){
+            $task->status = $status;
+            $task->save();
+        }
+
+        return redirect()->back();
+    }
 }

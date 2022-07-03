@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\BoardController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +30,14 @@ Route::middleware([
     Route::get('/welcome', function () {
         return view('livewire.welcome');
     })->name('livewire-welcome');
-    Route::post('/board/add', [\App\Http\Livewire\BoardController::class, "addBoard"])->name("addBoard");
-    Route::post('/board/{key}/update', [\App\Http\Livewire\BoardController::class, "updateBoard"])->name("updateBoard");
-    Route::post('/board/{key}/task/add', [\App\Http\Controllers\TaskController::class, "addTask"])->name("addTask");
-    Route::post('/board/{key}/task/edit', [\App\Http\Controllers\TaskController::class, "editTask"])->name("editTask");
+    Route::post('/board/add', [BoardController::class, "addBoard"])->name("addBoard");
+    Route::post('/board/{key}/update', [BoardController::class, "updateBoard"])->name("updateBoard");
+    Route::get('/board/{key}/delete', [BoardController::class, "deleteBoard"])->name("deleteBoard");
+
+    Route::post('/board/{key}/task/add', [TaskController::class, "addTask"])->name("addTask");
+    Route::post('/board/{key}/task/edit', [TaskController::class, "editTask"])->name("editTask");
 });
 
-Route::get('/board/{key?}', [\App\Http\Livewire\BoardController::class, "show"])->name("showBoard");
-Route::post('/board/{key}/task/update', [\App\Http\Controllers\TaskController::class, "updateTask"])->name("updateTask");
+Route::get('/board/{key?}', [BoardController::class, "show"])->name("showBoard");
+Route::post('/board/{key}/task/update', [TaskController::class, "updateTask"])->name("updateTask");
+Route::get("/board/{key}/task/{id}/updatestatus/{status}", [TaskController::class, "updateStatus"])->name("updateStatus");

@@ -2,10 +2,10 @@
 
 <h2>Installation</h2>
 <h4>1. Voraussetzungen</h3>
-- PHP 8.1.4
-- Laravel v9.1.10
-- composer 2.3.5
-- nodeJS v16.15.1
+- PHP 8.1.4<br>
+- Laravel v9.1.10<br>
+- composer 2.3.5<br>
+- nodeJS v16.15.1<br>
 - MySQL-Datenbank namens "kanban", Standardbenutzer mit Standard-Zugangsdaten:
 <span>
 DB_CONNECTION=mysql<br>
@@ -16,21 +16,34 @@ DB_USERNAME=root<br>
 DB_PASSWORD=
 </span>
 <h4>2. Projekt lokal aufsetzen</h4>
-- npm install
-- composer install
-- php artisan key:generate
-- composer require laravel/jetstream
-- composer require doctrine/dbal
-- (falls die IDE darauf hinweist, erneut composer install)
-- php artisan jetstream:install livewire
-- npm install 
-- npm run dev 
-- php artisan migrate 
-- php artisan serve
-- Aufruf im Browser: http://127.0.0.1:8000/
+- npm install<br>
+- composer install<br>
+- php artisan key:generate<br>
+- composer require laravel/jetstream<br>
+- composer require doctrine/dbal<br>
+- (falls die IDE darauf hinweist, erneut composer install)<br>
+- php artisan jetstream:install livewire<br>
+- npm install <br>
+- npm run dev <br>
+- php artisan migrate<br> 
+- php artisan serve<br>
+- Aufruf im Browser: http://127.0.0.1:8000/<br>
 
 
-<div>________________________________________________________________________</div>
+<h2>Unterscheidung zwischen eigenem Code und automatisch (von Laravel) erstelltem Code</h2>
+Alle selbst erstellten Dateien und Code-Segmente beginnen mit einem der folgenden Kommentare:<br>
+- // selbst erstellter Code<br>
+- /* selbst erstellter Code */<br>
+- {{-- selbst erstellter Code --}}<br>
+<br>
+Außerdem enthalten einige Dateien den Kommentar <br>
+{{-- angepasster Code --}}<br>
+Dies bedeutet, die Datei wurde automatisch erstellt und nur an wenigen Stellen verändert.<br>
+<br>
+Die Inhalte der Migration-Files von Juni und Juli 2022 sind ebenfalls selbst erstellt
+
+
+<div>_________________________________________________________________________________</div>
 
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>

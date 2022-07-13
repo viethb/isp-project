@@ -262,6 +262,7 @@ form>.button-large {
 .task-column {
     width: 25%;
     height: 100%;
+    overflow-y: auto;
 }
 
 /* Alle außer der letzten Spalte */
@@ -275,6 +276,9 @@ form>.button-large {
     background-color: var(--grey-light);
     height: 30px;
     line-height: 28px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 #first-task-column-header {

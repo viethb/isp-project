@@ -9,7 +9,7 @@
             @auth
                 <a href="{{ url('/welcome') }}" class="link-secondary">Zurück zu meinen Boards</a>
                 @if($board->isUserOwner(Auth::id()))
-                    <button class="button-small" onclick="showOverlayContainer('addTaskForm')">Neues Ticket</button>
+                    <button class="button-small" onclick="showOverlayContainer('addTaskForm')">Neuer Task</button>
                 @endif
             @endauth
             @guest

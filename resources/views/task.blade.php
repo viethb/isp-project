@@ -1,7 +1,7 @@
-<div class="task-small {{ isset($task->due_date) && $task->isDueIn() < 7 ? 'is-due' : ''  }}"
+<div class="task-small {{ isset($task->due_date) && $task->isDueIn() < 5 ? 'is-due' : ''  }}"
      onclick="showOverlayContainer({{ $task->id }})" draggable="true" ondragstart="drag(event, {{ $task->id }})">
     <div class="task-small-id">
-        #{{ $task->id }}
+        #{{ $task->task_number }}
     </div>
     <div class="task-small-title">
         {{ $task->title }}
@@ -9,11 +9,11 @@
     <div class="task-small-priority">
         {!! $task->getPrioritySymbol() !!}
     </div>
-{{--    @if(isset($task->assignee_id))--}}
-{{--        <img class="h-6 w-6 rounded-full object-cover"--}}
-{{--             src="{{ $task->assignee->profile_photo_url }}"--}}
-{{--             alt="{{ $task->assignee->name }}"/>--}}
-{{--    @endif--}}
+    @if(isset($task->assignee))
+        <img class="h-6 w-6 rounded-full object-cover"
+             src="https://eu.ui-avatars.com/api/?name={{$task->assignee}}&background=E8EDED&color=26C7B9&font-size=0.65&bold=true&rounded=true&uppercase=false"
+             alt="{{ $task->assignee }}"/>
+    @endif
     <div class="task-small-due-date">
         {{ $task->due_date }}
     </div>
@@ -30,17 +30,18 @@
 
 
         <div class="overlay-section">
-            <span>#{{ $task->id }}</span>
+            <span>#{{ $task->task_number }}</span>
                 @csrf
                 <input type="hidden" name="id" value="{{ $task->id }}">
 
                 @auth
-                    <input type="text" name="title" value="{{ $task->title }}" required>
-                    <textarea name="description" rows="5" maxlength="2500">{{ $task->description }}</textarea>
+                    <input type="text" name="title" value="{{ $task->title }}" maxlength="255" required>
+                    <textarea name="description" rows="5" maxlength="1000"
+                    placeholder="Hier könnte eine tolle Beschreibung stehen">{{ $task->description }}</textarea>
                 @endauth
                 @guest
                     <h3>{{ $task-> title }}</h3>
-                    <textarea rows="5" readonly>{{ $task->description }}</textarea>
+                    <textarea rows="5" readonly placeholder="Hier könnte eine tolle Beschreibung stehen">{{ $task->description }}</textarea>
                 @endguest
 
                 <div class="overlay-container-segment" id="update-task-first-segment">
@@ -59,7 +60,7 @@
                         <div>
                             <label for="assignee">Bearbeiter</label>
                         </div>
-                        <input type="text" name="assignee" value="{{ $task->assignee ?? '' }}">
+                        <input type="text" name="assignee" value="{{ $task->assignee ?? '' }}" maxlength="50">
                     </div>
                 </div>
                 @auth
@@ -119,11 +120,11 @@
                     <div class="overlay-container-segment">
                         <div>
                             <label for="dueDate">Fälligkeitsdatum</label>
-                            <p id="dueDate">{{ $task->due_date }}</p>
+                            <p id="dueDate">{{ $task->due_date ?? 'keines' }}</p>
                         </div>
                         <div>
                             <label for="type">Typ</label>
-                            <p id="type">{{ $task->type ?? '' }}</p>
+                            <p id="type">{{ $task->type ?? 'Standard' }}</p>
                         </div>
                     </div>
                     <div class="overlay-container-segment">
@@ -149,18 +150,20 @@
         </div>
 
         <div class="overlay-section">
-            Kommentare
-            <div class="overlay-container-segment">
+            <h3>Kommentare</h3>
+            <div id="comment-section">
                 @foreach($task->comments()->get() as $comment)
                     <div>
-                        {{ $comment->created_at }}
-                        {{ $comment->text }}
+                        <span class="comment-timestamp">{{ $comment->created_at }}</span>
+                        <span class="comment-text">{{ $comment->text }}</span>
                     </div>
                 @endforeach
             </div>
 
-            <label for="comment">Kommentar</label>
-            <textarea name="comment" rows="2" maxlength="2500"></textarea>
+            <div id="overlay-new-comment-segment">
+                <label for="comment">Kommentar</label>
+                <textarea name="comment" rows="4" maxlength="1000"></textarea>
+            </div>
         </div>
         </form>
     </div>

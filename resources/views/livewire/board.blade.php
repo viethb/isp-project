@@ -15,20 +15,22 @@
                 <a href="{{ url('/') }}" class="link-secondary">Zu einem anderen Board</a>
             @endguest
             <div>
-                Board-Key {{ $board->key }}
+                <h4>Board-Key</h4>
+                {{ $board->key }}
             </div>
             @auth
                 <a onclick="showOverlayContainer('updateBoardForm')">
+                    <img class="icon" src="{{ asset('images/pencil-icon.png') }}">
                    Board bearbeiten
                 </a>
             @endauth
         </div>
         <div class="board-page-area" id="board-area-middle">
             <h2>{{ $board->title }}</h2>
-            <div class="task-board-container border-slate-300">
+            <div class="task-board-container">
                 <div class="task-column" ondrop='drop(event, "{{ $board->key }}", 0)' ondragover="allowDrop(event)">
                     {{-- Column 'Offen' --}}
-                    <div class="bg-slate-50 border-b-2 border-slate-300">Offen</div>
+                    <div id="first-task-column-header" class="task-column-header">Offen</div>
                     @foreach($board->tasks()->where('status', 0)->get() as $task)
                         @include('task', ['task' => $task, 'key' => $board->key])
                     @endforeach
@@ -36,7 +38,7 @@
 
                 {{-- Column 'In Arbeit' --}}
                 <div class="task-column" ondrop='drop(event, "{{ $board->key }}", 1)' ondragover="allowDrop(event)">
-                    <div class="bg-slate-50 border-b-2 border-slate-300">In Arbeit</div>
+                    <div class="task-column-header">In Arbeit</div>
                     @foreach($board->tasks()->where('status', 1)->get() as $task)
                         @include('task', ['task' => $task, 'key' => $board->key])
                     @endforeach
@@ -44,7 +46,7 @@
 
                 {{-- Column 'Abgeschlossen' --}}
                 <div class="task-column" ondrop='drop(event, "{{ $board->key }}", 2)' ondragover="allowDrop(event)">
-                    <div class="bg-slate-50 border-b-2 border-slate-300">Abgeschlossen</div>
+                    <div class="task-column-header">Abgeschlossen</div>
                     @foreach($board->tasks()->where('status', 2)->get() as $task)
                         @include('task', ['task' => $task, 'key' => $board->key])
                     @endforeach
@@ -52,7 +54,7 @@
 
                 {{-- Column 'Vergangen' --}}
                 <div class="task-column" ondrop='drop(event, "{{ $board->key }}", 3)' ondragover="allowDrop(event)">
-                    <div class="bg-slate-50 border-b-2 border-slate-300">Vergangen</div>
+                    <div id="last-task-column-header" class="task-column-header">Vergangen</div>
                     @foreach($board->tasks()->where('status', 3)->get() as $task)
                         @include('task', ['task' => $task, 'key' => $board->key])
                     @endforeach
@@ -61,12 +63,15 @@
         </div>
         <div class="board-page-area" id="board-area-right">
             @guest
-                Ersteller
-                {{ $board->creator->name }}
+                <div>
+                    <h4>Board-Ersteller</h4>
+                    <span>{{ $board->creator->name }}</span>
+                </div>
             @endguest
-
-            Board Beschreibung
-            {{ $board->description }}
+            <div>
+                <h4>Board Beschreibung</h4>
+                <p>{{ $board->description }}</p>
+            </div>
         </div>
     </div>
 
@@ -78,10 +83,10 @@
                 <div class="overlay-section">
                     <h3>Neuen Task erstellen</h3>
                     <label for="title">Titel</label>
-                    <input type="text" name="title" required>
+                    <input type="text" name="title" maxlength="255" required>
 
                     <label for="description">Beschreibung</label>
-                    <textarea name="description" rows="5" maxlength="2500"></textarea>
+                    <textarea name="description" rows="5" maxlength="1000"></textarea>
 
                     <div class="overlay-container-segment">
                         <div>
@@ -111,7 +116,7 @@
                         </div>
                         <div>
                             <label for="assignee">Bearbeiter</label>
-                            <input type="text" name="assignee">
+                            <input type="text" name="assignee" maxlength="50">
                         </div>
                     </div>
                     <div class="button-container">
@@ -133,18 +138,17 @@
             <form method="POST" action="{{ route('updateBoard', ['key' => $board->key]) }}">
                 @csrf
                 <div class="overlay-section">
+
                     <h3>Board bearbeiten</h3>
-                    @auth
-                        <a onclick="showOverlayContainer('deleteBoardForm')" class="link-secondary">Board löschen</a>
-                    @endauth
+
+                    <a onclick="showOverlayContainer('deleteBoardForm')" class="link-secondary">Board löschen</a>
+
                     <label for="title">Titel</label>
-                    <input type="text" name="title" value="{{ $board->title }}" required>
+                    <input type="text" name="title" value="{{ $board->title }}" maxlength="255" required>
 
                     <label for="description">Beschreibung</label>
-                    <textarea name="description" rows="5" maxlength="2500">
-                        {{ $board->description }}
-                    </textarea>
-
+                    <textarea name="description" rows="5" maxlength="1000"
+                              placeholder="Hier könnte eine tolle Beschreibung stehen">{{ $board->description }}</textarea>
                     <div class="button-container">
                         <button type="reset" onclick="hideOverlayContainer('updateBoardForm')" class="button-secondary">
                             Abbrechen
@@ -155,7 +159,6 @@
                     </div>
                 </div>
             </form>
-            <!-- Board-Löschen-Button -->
         </div>
     </div>
 

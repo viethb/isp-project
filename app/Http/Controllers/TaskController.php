@@ -30,10 +30,12 @@ class TaskController extends Controller
         $dueDate = $request->input('dueDate');
         $priority = $request->input('priority');
         $type = $request->input('type');
+        $number = $board->tasks()->count() + 1;
 
         $task = Task::create([
             'title' => $title,
             'board_id' => $board->id,
+            'task_number' => $number,
         ]);
 
         if($description) {
@@ -45,7 +47,7 @@ class TaskController extends Controller
         if($dueDate) {
             $task->due_date = $dueDate;
         }
-        if($priority) {
+        if($priority !== 1) {
             $task->priority = $priority;
         }
         if($type!== "null") {

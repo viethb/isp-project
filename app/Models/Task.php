@@ -18,7 +18,8 @@ class Task extends Model
         'type',
         'due_date',
         'priority',
-        'assignee'
+        'assignee',
+        'task_number'
     ];
 
     public function board()

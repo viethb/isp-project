@@ -59,7 +59,14 @@ class BoardController extends Component
     }
 
     public function updateBoard(Request $request, string $key) {
-        $board = Board::where('key', $key)->findOrFail();
+        try {
+            error_log('----> update-Board-Function, key: '.$key);
+            $board = Board::where('key', $key)->firstOrFail();
+        }
+        catch(\Exception $e) {
+            error_log('---> Exception: '.$e);
+            return redirect()->route('root');
+        }
 
         $title = $request->input('title');
         $description = $request->input('description');
@@ -82,12 +89,12 @@ class BoardController extends Component
             $board = Board::where('key', $key)->firstOrFail();
         }
         catch(\Exception $e) {
-            error_log('---> Exeption: '.$e);
+            error_log('---> Exception: '.$e);
             return redirect()->route('root');
         }
 
 
-        error_log('---> board_id: '.$board->id);
+        error_log('---> show board, board_id: '.$board->id);
 
         return view("livewire.board", ['board' => $board]);
     }
@@ -97,10 +104,14 @@ class BoardController extends Component
             $board = Board::where('key', $key)->firstOrFail();
         }
         catch(\Exception $e) {
-            error_log('---> Exeption: Key not found! Key: '.$key.' : '.$e);
+            error_log('---> Exception: Key not found! Key: '.$key.' : '.$e);
             return redirect()->back();
         }
-
+        // besser wäre hier, direkt bei der Tabellen-Erstellung ein ->onDelete('cascade') für den Foreign-Key anzugeben
+        $board->tasks()->each(function ($task, $key) {
+            $task->comments()->delete();
+        });
+        $board->tasks()->delete();
         $board->delete();
         return redirect()->route('livewire-welcome');
     }

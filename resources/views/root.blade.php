@@ -6,6 +6,9 @@
 
         <title>Easy Kanban</title>
 
+        <!-- Tab-Icon -->
+        <link rel="icon" href="{{ asset('images/green-smiley.png') }}">
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -40,7 +43,7 @@
             <h1>Easy Kanban</h1>
                 <form method="GET" action="{{route('showBoard')}}">
                     @csrf
-                    <input type="text" name="board-key" placeholder="Board-Code eingeben" required>
+                    <input type="text" name="board-key" placeholder="Board-Code eingeben" maxlength="16" required>
 
                     <button type="submit" class="button-large">
                         Board besuchen

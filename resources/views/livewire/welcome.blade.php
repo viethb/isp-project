@@ -11,22 +11,24 @@
     <div id="addBoardForm" class="overlay-container">
         <div class="overlay">
             <form method="POST" action="{{route('addBoard')}}">
+                @csrf
                 <div class="overlay-section">
-                    @csrf
 
-                    <label for="title">Titel: </label>
-                    <input type="text" name="title" required>
+                    <h3>Neues Board</h3>
+                    <label for="title">Titel</label>
+                    <input type="text" name="title" maxlength="255" required>
 
-                    <label for="description">Beschreibung: </label>
-                    <input type="text" name="description">
+                    <label for="description">Beschreibung</label>
+                    <textarea name="description" rows="5" maxlength="1000"></textarea>
 
-
-                    <button type="reset" onclick="hideOverlayContainer('addBoardForm')" class="button-secondary">
-                        Abbrechen
-                    </button>
-                    <button type="submit" class="button-small">
-                        Speichern
-                    </button>
+                    <div class="button-container">
+                        <button type="reset" onclick="hideOverlayContainer('addBoardForm')" class="button-secondary">
+                            Abbrechen
+                        </button>
+                        <button type="submit" class="button-small">
+                            Speichern
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -34,8 +36,8 @@
     <div class="board-link-container">
         @foreach(Auth::user()->boards()->orderBy('title')->get() as $board)
             <a href="{{ route('showBoard', ['key' => $board->key]) }}">
-                <button class="board-link-button">
-                    <div>{{ $board->title }}</div>
+                <button class="board-link-button" title="{{ $board->title }}">
+                    <div><h4>{{ $board->title }}</h4></div>
                     <div>{{ $board->description }}</div>
                 </button>
             </a>

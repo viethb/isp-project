@@ -1,6 +1,7 @@
 :root {
-    --margin-small: 10px;
-    --task-board-padding: 5px;
+    --small-padding: 5px;
+    --medium-padding: 10px;
+    --large-padding: 15px;
     --small-task-inner-padding: 2px;
     --background-color: #FFFFFF;
     --grey-light: #E8EDED;
@@ -14,18 +15,33 @@
     font-family: Calibri;
 }
 
+/*Allgemeines Styling*/
+
 body {
     margin: 0;
     height: 100vh;
 }
 
 h2 {
-    margin-top: 0;
+    margin: 0 0 15px var(--medium-padding);
     display: inline-block;
+    max-height: 55px;
+    overflow: auto;
+}
+
+h3 {
+    margin: 0;
+}
+
+h4 {
+    display: inline-block;
+    width: 100%;
+    margin: var(--small-padding) 0;
 }
 
 a {
     text-decoration: none;
+    cursor: pointer;
 }
 
 button {
@@ -34,7 +50,7 @@ button {
     border: none;
     border-radius: 7px;
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.25));
-    padding: 10px 15px;;
+    padding: var(--medium-padding) 15px;
     cursor: pointer;
 }
 
@@ -42,11 +58,30 @@ button:active {
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.25));
 }
 
-input {
+input, select, textarea {
+    border: 1px solid var(--grey-dark);
     border-radius: 6px;
+}
+
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+    border: 2px solid var(--accent-color) !important;
+}
+
+input {
     height: 25px;
     width: 180px;
-    border: 1px solid var(--grey-dark);
+}
+
+p {
+    margin: 0;
+}
+
+select {
+    height: 29px;
+}
+
+textarea {
+    resize: none;
 }
 
 .button-large {
@@ -62,11 +97,23 @@ form>.button-large {
 
 .button-small, .button-secondary {
     height: 40px;
+    min-width: 90px;
 }
 
 .button-secondary {
     background-color: var(--grey-light);
     color: var(--font-color);
+}
+
+.icon {
+    height: 15px;
+    filter: invert(18%) sepia(30%) saturate(269%) hue-rotate(131deg) brightness(95%) contrast(93%);
+}
+
+.link-secondary {
+    color: var(--grey-dark);
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /*.guest-container, .guest-container>div, .guest-container>div>div {*/
@@ -88,7 +135,7 @@ form>.button-large {
 
 .user-buttons-container {
     text-align: end;
-    margin-right: 10px;
+    margin-right: var(--medium-padding);
 }
 
 .task-page-container {
@@ -100,12 +147,11 @@ form>.button-large {
 }
 
 .task-board-container {
-    width: calc( 100% - 2 * var(--margin-small) );
+    width: calc( 100% - 2 * var(--medium-padding) );
     height: 90%;
     border: 1px solid var(--task-board-border-color);
     border-radius: 7px;
-    margin: var(--margin-small);
-    padding: var(--task-board-padding);
+    margin: var(--medium-padding);
     display: flex;
 }
 
@@ -167,8 +213,17 @@ form>.button-large {
     background-color: var(--grey-light);
     color: var(--font-color);
     width: 100%;
+    height: 90px;
     text-align: left;
     padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: baseline;
+}
+
+.board-link-button>div {
+    max-height: 43%;
+    overflow: hidden;
 }
 
 .board-page-area {
@@ -177,27 +232,37 @@ form>.button-large {
     flex-wrap: wrap;
 }
 
-#board-area-left {
+#board-area-left, #board-area-right {
     width: 14%;
+    align-content: start;
+}
+
+#board-area-left>*, #board-area-right>* {
+    margin-bottom: var(--large-padding);
+}
+
+#board-area-left {
+    padding-left: var(--medium-padding);
 }
 
 #board-area-left>div, #board-area-left>a {
     height: fit-content;
 }
 
-#board-area-middle {
-    width: 70%;
+#board-area-right p {
+    max-height: 79vh;
+    overflow: auto;
 }
 
-#board-area-right {
-    width: 14%;
+#board-area-middle {
+    width: 70%;
 }
 
 .user-links-container {
     position: relative;
     display: flex;
     justify-content: space-between;
-    padding: var(--margin-small);
+    padding: var(--medium-padding);
 }
 
 .user-links-container button {
@@ -217,11 +282,30 @@ form>.button-large {
 }
 
 .overlay-section {
+    position: relative;
     width: 50%;
     border: 1px solid var(--overlay-color);
     border-radius: 6px;
     background: var(--background-color);
     margin: 0;
+    padding: var(--large-padding);
+    text-align: left;
+}
+
+.overlay-section>a {
+    position: absolute;
+    top: var(--large-padding);
+    right: var(--large-padding);
+}
+
+.overlay-section label, .overlay-section input, .overlay-section textarea {
+    display: block;
+    width: 98%;
+}
+
+.overlay-container-segment {
+    display: flex;
+    justify-content: space-between;
 }
 
 .overlay-container-segment>div:first-of-type {
@@ -232,9 +316,49 @@ form>.button-large {
     width: 60%;
 }
 
+.overlay-container-segment>div>label {
+    margin-top: 15px;
+}
+
+
+/*Comments*/
+.comment-timestamp {
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.comment-text {
+    width: 100%;
+    display: block;
+    overflow-y: auto;
+    max-height: 55px;
+    overflow-wrap: break-word;
+    font-size: 14px;
+}
+
+#comment-section {
+    display: block;
+    height: 67%;
+    overflow-y: auto;
+}
+
+#comment-section>div {
+    margin-top: var(--medium-padding);
+}
+
+#overlay-new-comment-segment {
+    display: block;
+    position: absolute;
+    width: 92%;
+    bottom: var(--large-padding);
+}
+
 .overlay .button-container {
     text-align: right;
     margin-top: 20px;
+    position: absolute;
+    right: var(--large-padding);
+    bottom: var(--large-padding);
 }
 
 .update-task form>label:first-of-type {
@@ -260,13 +384,25 @@ form>.button-large {
     height: 100%;
 }
 
-/*Alle außer der letzten Spalte*/
+/* Alle außer der letzten Spalte */
 .task-column:not(:nth-last-child(1)) {
     border-right: 1px solid var(--task-board-border-color);
 }
 
-.task-column>div:first-of-type {
+/* Spaltenüberschrift */
+.task-column-header {
     text-align: center;
+    background-color: var(--grey-light);
+    height: 30px;
+    line-height: 28px;
+}
+
+#first-task-column-header {
+    border-radius: 7px 0 0 0;
+}
+
+#last-task-column-header {
+    border-radius: 0 7px 0 0;
 }
 
 .is-due {
@@ -282,7 +418,7 @@ form>.button-large {
 
 .task-small-title {
     display: inline-block;
-    padding: 8px 0 0 10px;
+    padding: 8px 0 0 var(--medium-padding);
     font-size: 12px;
     line-height: 16px;
     height: 90%;
@@ -308,6 +444,7 @@ form>.button-large {
     position: absolute;
     top: var(--small-task-inner-padding);
     right: var(--small-task-inner-padding);
+    height: 25px;
 }
 
 .task-small-due-date {
@@ -321,10 +458,14 @@ form>.button-large {
     box-shadow: inset 0 0 10px 2px var(--accent-color);
 }
 
+.allow-drop>.task-column-header {
+    background-color: var(--accent-color);
+}
+
 .form-field-container {
     display: flex;
     width: 280px;
-    margin: 10px auto;
+    margin: var(--medium-padding) auto;
     justify-content: space-between;
     align-items: center;
 }
@@ -335,7 +476,7 @@ form>.button-large {
 }
 
 #update-task-first-segment {
-    margin-top: 10px
+    margin-top: var(--medium-padding);
 }
 
 #update-task-first-segment label{
@@ -346,17 +487,18 @@ form>.button-large {
 
 #update-task-first-segment select{
     display: inline;
-    width: 65%;
+    width: 100%;
+    height: 29px;
 }
 
-#update-task-first-segment>div {
-    display: flex;
-    justify-content: space-between;
-}
+/*#update-task-first-segment>div {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*}*/
 
-#update-task-first-segment>div>div {
-    display: inline;
-}
+/*#update-task-first-segment>div>div {*/
+/*    display: inline;*/
+/*}*/
 
 #editTaskForm {
     display: contents;

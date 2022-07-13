@@ -1,3 +1,4 @@
+/* selbst erstellter Code */
 :root {
     --small-padding: 5px;
     --medium-padding: 10px;
@@ -116,10 +117,35 @@ form>.button-large {
     cursor: pointer;
 }
 
-/*.guest-container, .guest-container>div, .guest-container>div>div {*/
-/*    height: 100%;*/
-/*}*/
+.user-buttons-container {
+    text-align: end;
+    margin-right: var(--medium-padding);
+}
 
+.user-links-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: var(--medium-padding);
+}
+
+.user-links-container button {
+    background: none;
+    color: var(--font-color);
+    padding: 0;
+    filter: none;
+}
+
+.user-links-container>a {
+    text-decoration: none;
+    color: var(--accent-color);
+}
+
+.user-links-container form {
+    display: inline;
+}
+
+/* ----- Root-, Login-, Register- und Welcome-Page Styling ----- */
 .start-page {
     height: 100%;
     text-align: center;
@@ -131,56 +157,6 @@ form>.button-large {
     color: var(--grey-dark);
     font-size: 100px;
     font-weight: lighter;
-}
-
-.user-buttons-container {
-    text-align: end;
-    margin-right: var(--medium-padding);
-}
-
-.task-page-container {
-    height: 100%;
-}
-
-.board-main-content {
-    height: 90vh;
-}
-
-.task-board-container {
-    width: calc( 100% - 2 * var(--medium-padding) );
-    height: 90%;
-    border: 1px solid var(--task-board-border-color);
-    border-radius: 7px;
-    margin: var(--medium-padding);
-    display: flex;
-}
-
-.overlay-container {
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--overlay-color);
-    z-index: 100;
-    cursor: pointer;
-}
-
-.overlay {
-    height: 60%;
-    width: 60%;
-    margin: 10% auto;
-    display: flex;
-    justify-content: center;
-}
-
-.overlay>form {
-    width: 100%;
-    justify-content: center;
-    display: flex;
 }
 
 .welcome-container {
@@ -223,7 +199,32 @@ form>.button-large {
 
 .board-link-button>div {
     max-height: 43%;
+    width: 100%;
     overflow: hidden;
+}
+
+#login-container {
+    height: 70vh;
+    padding-top: 30vh;
+}
+
+/* ----- Board-Ansicht Styling ----- */
+
+.task-page-container {
+    height: 100%;
+}
+
+.board-main-content {
+    height: 90vh;
+}
+
+.task-board-container {
+    width: calc( 100% - 2 * var(--medium-padding) );
+    height: 90%;
+    border: 1px solid var(--task-board-border-color);
+    border-radius: 7px;
+    margin: var(--medium-padding);
+    display: flex;
 }
 
 .board-page-area {
@@ -258,27 +259,68 @@ form>.button-large {
     width: 70%;
 }
 
-.user-links-container {
-    position: relative;
+.task-column {
+    width: 25%;
+    height: 100%;
+}
+
+/* Alle außer der letzten Spalte */
+.task-column:not(:nth-last-child(1)) {
+    border-right: 1px solid var(--task-board-border-color);
+}
+
+/* Spaltenüberschrift */
+.task-column-header {
+    text-align: center;
+    background-color: var(--grey-light);
+    height: 30px;
+    line-height: 28px;
+}
+
+#first-task-column-header {
+    border-radius: 7px 0 0 0;
+}
+
+#last-task-column-header {
+    border-radius: 0 7px 0 0;
+}
+
+.allow-drop {
+    box-shadow: inset 0 0 10px 2px var(--accent-color);
+}
+
+.allow-drop>.task-column-header {
+    background-color: var(--accent-color);
+}
+
+/* ----- Overlay Styling ----- */
+
+.overlay-container {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--overlay-color);
+    z-index: 100;
+    cursor: pointer;
+}
+
+.overlay {
+    height: 60%;
+    width: 60%;
+    margin: 10% auto;
     display: flex;
-    justify-content: space-between;
-    padding: var(--medium-padding);
+    justify-content: center;
 }
 
-.user-links-container button {
-    background: none;
-    color: var(--font-color);
-    padding: 0;
-    filter: none;
-}
-
-.user-links-container>a {
-    text-decoration: none;
-    color: var(--accent-color);
-}
-
-.user-links-container form {
-    display: inline;
+.overlay>form {
+    width: 100%;
+    justify-content: center;
+    display: flex;
 }
 
 .overlay-section {
@@ -290,6 +332,7 @@ form>.button-large {
     margin: 0;
     padding: var(--large-padding);
     text-align: left;
+    cursor: auto;
 }
 
 .overlay-section>a {
@@ -320,8 +363,24 @@ form>.button-large {
     margin-top: 15px;
 }
 
+.overlay .button-container {
+    text-align: right;
+    margin-top: 20px;
+    position: absolute;
+    right: var(--large-padding);
+    bottom: var(--large-padding);
+}
 
-/*Comments*/
+.update-task form>label:first-of-type {
+    margin: 0;
+}
+
+.update-task .button-container {
+    margin: 0;
+}
+
+/* ----- Comments Styling ----- */
+
 .comment-timestamp {
     white-space: nowrap;
     font-size: 12px;
@@ -353,21 +412,7 @@ form>.button-large {
     bottom: var(--large-padding);
 }
 
-.overlay .button-container {
-    text-align: right;
-    margin-top: 20px;
-    position: absolute;
-    right: var(--large-padding);
-    bottom: var(--large-padding);
-}
-
-.update-task form>label:first-of-type {
-    margin: 0;
-}
-
-.update-task .button-container {
-    margin: 0;
-}
+/* ----- Task Styling ----- */
 
 .task-small {
     border: 1px solid var(--task-board-border-color);
@@ -377,32 +422,6 @@ form>.button-large {
     margin: 5px 5px 0;
     position: relative;
     background-color: white;
-}
-
-.task-column {
-    width: 25%;
-    height: 100%;
-}
-
-/* Alle außer der letzten Spalte */
-.task-column:not(:nth-last-child(1)) {
-    border-right: 1px solid var(--task-board-border-color);
-}
-
-/* Spaltenüberschrift */
-.task-column-header {
-    text-align: center;
-    background-color: var(--grey-light);
-    height: 30px;
-    line-height: 28px;
-}
-
-#first-task-column-header {
-    border-radius: 7px 0 0 0;
-}
-
-#last-task-column-header {
-    border-radius: 0 7px 0 0;
 }
 
 .is-due {
@@ -454,14 +473,6 @@ form>.button-large {
     font-size: 8px;
 }
 
-.allow-drop {
-    box-shadow: inset 0 0 10px 2px var(--accent-color);
-}
-
-.allow-drop>.task-column-header {
-    background-color: var(--accent-color);
-}
-
 .form-field-container {
     display: flex;
     width: 280px;
@@ -491,20 +502,7 @@ form>.button-large {
     height: 29px;
 }
 
-/*#update-task-first-segment>div {*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*}*/
-
-/*#update-task-first-segment>div>div {*/
-/*    display: inline;*/
-/*}*/
-
 #editTaskForm {
     display: contents;
 }
 
-#login-container {
-    height: 70vh;
-    padding-top: 30vh;
-}

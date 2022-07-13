@@ -18,6 +18,7 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/kanban.js')}}" defer></script>
     </head>
     <body>
         <div class="guest-container">

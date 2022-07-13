@@ -1,19 +1,15 @@
 <?php
-
+// selbst erstellter Code
 namespace App\Http\Controllers;
 
-use App\Models\Board;
 use App\Models\Comment;
 use App\Models\Task;
-use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function index()
-    {
-        //
-    }
 
+    // Funktion, die einen neuen Kommentar erstellt für den übergebenen Task mit dem übergebenen Text
+    // Route zu dieser Funktion ist auch durch Gast-Benutzer aufrufbar
     public function addComment (string $task_id, string $text)
     {
         $task = Task::find($task_id)->firstOrFail();

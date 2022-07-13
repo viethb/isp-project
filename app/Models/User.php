@@ -59,6 +59,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    // selbst erstellter Code
+    // Ein User hat keine bis viele Boards
     public function boards()
     {
         return $this->hasMany(Board::class, 'creator_id');

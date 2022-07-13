@@ -1,5 +1,5 @@
 <?php
-
+// selbst erstellter Code
 namespace App\Http\Livewire;
 
 use Livewire\Component;

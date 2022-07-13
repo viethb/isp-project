@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+{{-- angepasster Code --}}
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,6 +41,7 @@
                     </div>
                 </div>
             @endif
+            {{-- selbst erstellter Code --}}
             <h1>Easy Kanban</h1>
                 <form method="GET" action="{{route('showBoard')}}">
                     @csrf

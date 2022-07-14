@@ -74,7 +74,7 @@
                 <span>{{ $board->creator->name }}</span>
             </div>
             <div>
-                <h4>Board Beschreibung</h4>
+                <h4>Board-Beschreibung</h4>
                 <p>{{ $board->description }}</p>
             </div>
         </div>

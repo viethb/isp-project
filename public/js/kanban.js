@@ -1,3 +1,4 @@
+// selbst erstellter Code
 const columns = document.getElementsByClassName('task-column');
 
 Array.from(columns).forEach(c => {
